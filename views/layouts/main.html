@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en_US">
+<!--suppress HtmlRequiredTitleElement -->
+<head>
+    {{template "views/partials/head" .}}
+</head>
+
+<body class="d-flex flex-column h-100">
+{{template "views/partials/header" .}}
+<main class="flex-shrink-0">
+    {{embed}}
+</main>
+
+{{template "views/partials/toasts" .}}
+{{template "views/partials/footer" .}}
+<script src="/static/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

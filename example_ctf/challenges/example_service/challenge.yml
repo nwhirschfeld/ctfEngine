@@ -1,0 +1,17 @@
+name: "service example"
+category: service
+description: >
+  This is an example challenge based on a challenge service.
+  
+  ## Solution
+  
+  The solution is provided by the service.
+  
+  ## Run the service
+  
+  So far ctfEngine does not manage the container runtime, so it is recommended to use docker-compose or something 
+  similar to run the container.
+value: 10
+flag: CTF[ITSASERVICE]
+service:
+  port: 42023

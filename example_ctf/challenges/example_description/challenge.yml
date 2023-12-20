@@ -1,0 +1,11 @@
+name: "description example"
+category: description
+description: >
+  This is an example challenge based on a description text.
+  The description field supports __markdown__ formatted text.
+  
+  ## Solution
+  
+  The solution to this example is `CTF[DESCRIPTION]`
+value: 10
+flag: CTF[DESCRIPTION]

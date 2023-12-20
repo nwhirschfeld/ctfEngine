@@ -1,0 +1,42 @@
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    {{if eq .Path "/" }}
+                        <a href="/" class="nav-link px-2 text-secondary">Home</a>
+                    {{else}}
+                        <a href="/" class="nav-link px-2 text-white">Home</a>
+                    {{end}}
+                </li>
+                <li>
+                    {{if eq .Path "/challenges" }}
+                        <a href="/challenges" class="nav-link px-2 text-secondary">Challenges</a>
+                    {{else}}
+                        <a href="/challenges" class="nav-link px-2 text-white">Challenges</a>
+                    {{end}}
+                </li>
+                <li>
+                    {{if eq .Path "/score" }}
+                        <a href="/score" class="nav-link px-2 text-secondary">Scoreboard</a>
+                    {{else}}
+                        <a href="/score" class="nav-link px-2 text-white">Scoreboard</a>
+                    {{end}}
+                </li>
+            </ul>
+
+            <div class="text-end">
+                {{if .Session.LoggedIn }}
+                    <span class="navbar-text px-2 text-white">
+                        {{.Session.UserName}}
+                        <span class="badge rounded-pill bg-secondary">{{.Session.Score}} points</span>
+                    </span>
+                    <a class="btn btn-outline-light me-2" href="/logout" type="button">Logout</a>
+                {{else}}
+                    {{template "views/partials/login" .}}
+                    {{template "views/partials/sign-up" .}}
+                {{end}}
+            </div>
+        </div>
+    </div>
+</header>

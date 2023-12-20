@@ -1,0 +1,30 @@
+<button class="btn btn-outline-light me-2" data-bs-target="#loginModal" data-bs-toggle="modal" type="button"
+        xmlns="http://www.w3.org/1999/html">Login
+</button>
+<div aria-hidden="true" class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog" style="color: black;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Login</h1>
+                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/login" method="POST">
+                    <div class="form-floating mb-3">
+                        <input class="form-control rounded-3" id="username" name="username" placeholder="Username"/>
+                        <label for="username">Username</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="password" name="password" placeholder="Password"
+                               type="password"/>
+                        <label class="form-label" for="password">Password</label>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit">Login</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

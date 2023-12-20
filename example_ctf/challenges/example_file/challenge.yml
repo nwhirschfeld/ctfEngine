@@ -1,0 +1,10 @@
+name: "file example"
+category: file
+description: >
+  This is an example challenge based on a challenge file.
+  
+  ## Solution
+  
+  The solution is in the file.
+value: 10
+flag: CTF[FILECHALLENGE]

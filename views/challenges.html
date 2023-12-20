@@ -1,0 +1,58 @@
+<div class="container">
+    <h1 class="mt-5">Challenges</h1>
+
+    {{ $challenges := .CTF.Challenges }}
+    {{ $solvedChallenges := .SolvedChallenges }}
+    <div class="accordion" id="accordionExample">
+        {{ range $index, $category := .Categories }}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button aria-controls="collapse{{$index}}" aria-expanded="true"
+                            class="accordion-button text-uppercase"
+                            data-bs-target="#collapse{{$index}}" data-bs-toggle="collapse" type="button">
+                        {{ $category }}
+                    </button>
+                </h2>
+                <div class="accordion-collapse collapse {{ if eq $index 0 }}show{{ end }}"
+                     data-bs-parent="#accordionExample"
+                     id="collapse{{$index}}" style="background: rgba(0, 0, 0, 0.05);">
+                    <div class="accordion-body">
+
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            {{ range $path, $challenge := $challenges }}
+                                {{ if eq $challenge.Category $category }}
+                                    {{ $solved := (inList $path $solvedChallenges) }}
+                                    <div class="col">
+                                        <a class="card position-relative text-reset text-decoration-none {{ if $solved }}bg-success{{ end}}"
+                                           href="/challenges/{{$path}}">
+                                            {{ if $solved }}
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                            {{ $challenge.Points }}
+                                        </span>
+                                            {{ else }}
+                                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                             {{ $challenge.Points }}
+                                        </span>
+                                            {{ end }}
+
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $challenge.Title }}</h5>
+                                            </div>
+                                        </a>
+                                    </div>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        {{ end }}
+    </div>
+
+</div>
+<br>
+
+<script async src="/static/js/masonry.pkgd.min.js"></script>
+

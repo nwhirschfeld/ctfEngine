@@ -1,0 +1,163 @@
+{{ $path := .Path}}
+{{ $ownedHints := .Hints}}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-9">
+            <h1 class="mt-5 position-relative">
+                {{.Challenge.Title}}
+                <span class="badge rounded-pill bg-secondary">{{.Challenge.Points}} points</span>
+            </h1>
+            <p>
+                {{.Challenge.Text | renderMarkdown}}
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+            <div class="position-sticky" style="top: 2rem;">
+                <br>
+                <br>
+                {{ if ne .Challenge.Service.Port 0 }}
+                    <div class="p-3 card">
+                        <h4 class="card-title">Service</h4>
+                        <div class="card-text">
+                            <code>{{ .CTF.Configuration.ServiceHost }}:{{ .Challenge.Service.Port }}</code>
+                        </div>
+                    </div>
+                    <br>
+                {{ end }}
+
+                <div class="p-3 card">
+                    {{ if .Solved }}
+                        <h4 class="card-title">Solved</h4>
+                    {{ else }}
+                        <h4 class="card-title">Submit Flag</h4>
+                        <form method="POST">
+                            <div>
+                                <label class="form-label" for="flag">Flag</label>
+                                <input class="form-control" id="flag" name="flag"/>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </form>
+                    {{ end }}
+                </div>
+                <br>
+
+                {{ if gt (len .Challenge.Files) 0 }}
+                    <div class="p-3 card">
+                        <h4 class="card-title">Files</h4>
+                        <ol class="list-unstyled mb-0">
+                            {{ range $id, $file := .Challenge.Files }}
+                                <li>
+                                    <a class=" text-reset text-decoration-none" download="{{ $file.Filename }}"
+                                       href="{{ $path }}/files/{{ $id }}">
+                                        <svg class="bi bi-file-earmark-binary-fill align-text-bottom"
+                                             fill="currentColor"
+                                             height="16" viewBox="0 0 16 16"
+                                             width="16" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M5.526 10.273c-.542 0-.832.563-.832 1.612 0 .088.003.173.006.252l1.559-1.143c-.126-.474-.375-.72-.733-.72zm-.732 2.508c.126.472.372.718.732.718.54 0 .83-.563.83-1.614 0-.085-.003-.17-.006-.25l-1.556 1.146z"/>
+                                            <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zm-2.45 8.385c0 1.415-.548 2.206-1.524 2.206C4.548 14.09 4 13.3 4 11.885c0-1.412.548-2.203 1.526-2.203.976 0 1.524.79 1.524 2.203zm3.805 1.52V14h-3v-.595h1.181V10.5h-.05l-1.136.747v-.688l1.19-.786h.69v3.633h1.125z"/>
+                                        </svg>
+                                        <span class="align-middle">
+                                    {{ $file.Filename }}
+                                </span>
+                                        <small class="align-bottom">
+                                            {{ ppFilesize $file.Size }}
+                                        </small>
+                                    </a>
+                                </li>
+                            {{ end }}
+                        </ol>
+                    </div>
+                    <br>
+                {{ end }}
+
+                {{ if gt (len .Challenge.Hints) 0 }}
+                    <div class="p-3 card">
+                        <h4 class="card-title">Hints</h4>
+                        <div class="accordion">
+                            {{ range $i, $hint := .Challenge.Hints }}
+                                {{ if (inList $hint.UID $ownedHints) }}
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button aria-controls="panelsStayOpen-{{ $hint.UID }}"
+                                                    aria-expanded="true"
+                                                    class="accordion-button"
+                                                    data-bs-target="#panelsStayOpen-{{ $hint.UID }}"
+                                                    data-bs-toggle="collapse"
+                                                    type="button">
+                                                Hint No. {{ $i }}
+                                            </button>
+                                        </h2>
+                                        <div class="accordion-collapse collapse show"
+                                             id="panelsStayOpen-{{ $hint.UID }}">
+                                            <div class="accordion-body">
+                                                {{ $hint.Text }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{ else }}
+                                    <div class="accordion-item">
+                                        <a data-bs-target="#{{ $hint.UID }}" data-bs-toggle="modal" type="button">
+                                            <h2 class="accordion-header">
+                                            <span aria-controls="panelsStayOpen-collapseOne"
+                                                  class="accordion-button collapsed text-bg-danger"
+                                                  data-bs-target="#panelsStayOpen-123"
+                                                  data-bs-toggle="collapse"
+                                                  type="button">
+                                                Get hint No. {{ $i }} for {{$hint.Cost}} points
+                                            </span>
+                                            </h2>
+                                        </a>
+                                    </div>
+                                    <div aria-hidden="true"
+                                         aria-labelledby="exampleModalLabel"
+                                         class="modal fade"
+                                         data-bs-backdrop="false"
+                                         id="{{ $hint.UID }}"
+                                         tabindex="-10">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Do you really
+                                                        want to buy
+                                                        this hint?</h1>
+                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                            type="button"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    The total score you can get by solving the challenge will be reduced
+                                                    by
+                                                    {{$hint.Cost}} points.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <form action="{{ $path }}/hint" method="POST">
+                                                        <input name="hintid" type="hidden" value="{{ $hint.UID }}"/>
+                                                        <button class="btn btn-secondary" data-bs-dismiss="modal"
+                                                                type="button">
+                                                            Cancel
+                                                        </button>
+                                                        <button class="btn btn-danger" type="submit">Get Hint
+                                                            for {{$hint.Cost}}
+                                                            points
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{ end }}
+                            {{ end }}
+                        </div>
+                    </div>
+                    <br>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</div>
