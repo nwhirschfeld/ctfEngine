@@ -93,7 +93,9 @@ func main() {
 	)
 
 	app := fiber.New(fiber.Config{
-		Views: engine,
+		Views:        engine,
+		ServerHeader: "ctfEngine",
+		AppName:      "ctfEngine",
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			// TODO: add logging here
 			return c.Render("views/error", fiber.Map{}, "views/layouts/main")
