@@ -52,7 +52,11 @@ func main() {
 	var ctfLocation string
 	flag.StringVar(&ctfLocation, "l", "/ctf", "load ctf from this directory")
 	flag.Parse()
-	ctf, _ := initCTF(ctfLocation)
+	ctf, err := initCTF(ctfLocation)
+	if err != nil {
+		fmt.Printf("Could not load CTF from path \"%s\".\n", ctfLocation)
+		return
+	}
 
 	engine := html.NewFileSystem(http.FS(viewsFS), ".html")
 
