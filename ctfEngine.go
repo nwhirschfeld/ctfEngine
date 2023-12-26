@@ -21,27 +21,6 @@ func handleError(c *fiber.Ctx, err error) error {
 	return c.Redirect("/")
 }
 
-func renderWithSession(c *fiber.Ctx, ctf ctf, name string, additionalEnv ...fiber.Map) error {
-	sess, err := ctf.session(c)
-	if err != nil {
-		return handleError(c, err)
-	}
-
-	env := fiber.Map{
-		"CTF":     ctf,
-		"Path":    c.Path(),
-		"Session": sess,
-	}
-
-	for _, i := range additionalEnv {
-		for k, v := range i {
-			env[k] = v
-		}
-	}
-
-	return c.Render(fmt.Sprintf("views/%s", name), env, "views/layouts/main")
-}
-
 //go:embed views/*
 var viewsFS embed.FS
 
@@ -109,7 +88,7 @@ func main() {
 		Browse:     true,
 	}))
 
-	addRoutes(app, ctf)
+	addRoutes(app, &ctf)
 
 	log.Fatal(app.Listen(":3000"))
 }
