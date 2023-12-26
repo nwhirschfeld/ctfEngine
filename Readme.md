@@ -24,9 +24,31 @@ It has been tested in events with approximately 10 players.
         - CTFs are organized in a folder structure.
         - Utilizes plaintext files where applicable.
 
-## CTF Format
+## CTF Definition
+
+To use ctfEngine, you need a CTF project in the correct format.
+Specify the location of your CTF project while starting ctfEngine using the 
+`-l` parameter or place your CTD in `/ctf` (like in the docker container).
+
+To start the example project you could run 
+```(shell)
+# go run ctfEngine -l example_ctf
+
+ ┌───────────────────────────────────────────────────┐ 
+ │                     ctfEngine                     │ 
+ │                   Fiber v2.51.0                   │ 
+ │               http://127.0.0.1:3000               │ 
+ │       (bound on host 0.0.0.0 and port 3000)       │ 
+ │                                                   │ 
+ │ Handlers ............ 19  Processes ........... 1 │ 
+ │ Prefork ....... Disabled  PID ............. 19503 │ 
+ └───────────────────────────────────────────────────┘ 
+
+```
 
 ### CTF Structure
+
+The CTF structure consists mainly of `.yml` files and folders.
 
 ~~~
 ├── challenges
@@ -50,8 +72,34 @@ It has been tested in events with approximately 10 players.
 
 #### challenge.yml
 
-Documentation for challenge.yml is currently unavailable. Refer to the provided examples for guidance.
+The `challenge.yml` files should be formatted like the following example:
 
-Feel free to improve the documentation for challenge.yml based on the available examples. Your contributions are highly
-appreciated!
+```(yml)
+name: Example Challenge
+description: >
+  This is an example challenge that requires participants to...
+value: 100
+flag: CTF{example_flag}
+category: Web Exploitation
+hints:
+  - description: "Consider looking into..."
+    cost: 10
+  - description: "Another hint suggestion..."
+    cost: 20
+service:
+  port: 1337
+```
+
+# Contribution
+
+You are welcome to contribute to ctfEngine and enhance its capabilities.
+
+Feel free to:
+
+- Report issues
+- Suggest new features
+- Submit pull requests
+
+Your contributions help make ctfEngine better for everyone. Thank you for your support!
+
 
