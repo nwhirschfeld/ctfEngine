@@ -31,7 +31,7 @@ Specify the location of your CTF project while starting ctfEngine using the
 `-l` parameter or place your CTD in `/ctf` (like in the docker container).
 
 To start the example project you could run 
-```(shell)
+```shell
 # go run ctfEngine -l example_ctf
 
  ┌───────────────────────────────────────────────────┐ 
@@ -74,7 +74,7 @@ The CTF structure consists mainly of `.yml` files and folders.
 
 The `challenge.yml` files should be formatted like the following example:
 
-```(yml)
+```yaml
 name: Example Challenge
 description: >
   This is an example challenge that requires participants to...
@@ -99,7 +99,7 @@ registrationToken: True
 ```
 
 Further, you need to add tokens to the database.
-```bash
+```shell
 # go run ctfEngine -a "f47ac10b-58cc-4372-a567-0e02b2c3d479" -l example_ctf
 added signup token to DB
 ```
