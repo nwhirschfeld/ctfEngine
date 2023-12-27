@@ -2,4 +2,5 @@ title: "Example CTF"
 contact: "CTFMaster master@example-ctf-host.io"
 sessionTimeout: 600000
 submitCoolDown: 20
+registrationToken: True
 serviceHost: example-ctf-host.io

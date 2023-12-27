@@ -24,6 +24,14 @@
                                type="password"/>
                         <label class="form-label" for="password2">Password (repeat)</label>
                     </div>
+
+                    {{ if .CTF.Configuration.RegistrationToken }}
+                    <div class="form-floating mb-3">
+                        <input class="form-control rounded-3" id="token" name="token" placeholder="Token"/>
+                        <label for="token">Token</label>
+                    </div>
+                    {{end}}
+
                     <div>
                         <button class="btn btn-primary" type="submit">Sign me up!</button>
                     </div>

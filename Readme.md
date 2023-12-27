@@ -90,6 +90,20 @@ service:
   port: 1337
 ```
 
+### SignUp Tokens
+It is possible to enable a feature, that requires users to provide a single 
+use __token__ to sign up.
+To enable this feature, _ctf.yml_ needs to be extended by the following line:
+```yaml
+registrationToken: True
+```
+
+Further, you need to add tokens to the database.
+```bash
+# go run ctfEngine -a "f47ac10b-58cc-4372-a567-0e02b2c3d479" -l example_ctf
+added signup token to DB
+```
+
 # Contribution
 
 You are welcome to contribute to ctfEngine and enhance its capabilities.

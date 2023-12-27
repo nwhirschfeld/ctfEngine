@@ -9,12 +9,13 @@ import (
 )
 
 type configuration struct {
-	Title          string `yaml:"title"`
-	Contact        string `yaml:"contact"`
-	SessionTimeout int    `yaml:"sessionTimeout"`
-	CoolDown       int    `yaml:"submitCoolDown"`
-	ServiceHost    string `yaml:"serviceHost"`
-	IndexPage      template.HTML
+	Title             string `yaml:"title"`
+	Contact           string `yaml:"contact"`
+	SessionTimeout    int    `yaml:"sessionTimeout"`
+	CoolDown          int    `yaml:"submitCoolDown"`
+	ServiceHost       string `yaml:"serviceHost"`
+	RegistrationToken bool   `yaml:"registrationToken"`
+	IndexPage         template.HTML
 }
 
 func readConfiguration(filePath string) (configuration, error) {

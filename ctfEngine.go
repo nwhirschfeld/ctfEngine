@@ -29,7 +29,9 @@ var staticFS embed.FS
 
 func main() {
 	var ctfLocation string
+	var signupTokenToAdd string
 	flag.StringVar(&ctfLocation, "l", "/ctf", "load ctf from this directory")
+	flag.StringVar(&signupTokenToAdd, "a", "", "add a token for signup to the database")
 	flag.Parse()
 	ctf, err := initCTF(ctfLocation)
 	if err != nil {
@@ -87,6 +89,16 @@ func main() {
 		PathPrefix: "static",
 		Browse:     true,
 	}))
+
+	if signupTokenToAdd != "" {
+		err = ctf.addSignupToken(signupTokenToAdd)
+		if err == nil {
+			fmt.Println("added signup token to DB")
+		} else {
+			fmt.Println("could not add signup token to DB")
+		}
+		return
+	}
 
 	addRoutes(app, &ctf)
 

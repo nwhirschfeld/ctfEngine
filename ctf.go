@@ -62,7 +62,7 @@ func (ctf *ctf) logout(c *fiber.Ctx) error {
 	return nil
 }
 
-func (ctf *ctf) register(c *fiber.Ctx, username, password, password2 string) (user, error) {
+func (ctf *ctf) register(c *fiber.Ctx, username, password, password2, token string) (user, error) {
 	if username == "" {
 		return user{}, fmt.Errorf("empty username cannot be used for registration")
 	}
@@ -71,10 +71,23 @@ func (ctf *ctf) register(c *fiber.Ctx, username, password, password2 string) (us
 		return user{}, fmt.Errorf("passwords does not match")
 	}
 
+	if ctf.Configuration.RegistrationToken {
+		state, err := dbHasSignupToken(ctf.Storage, token)
+		if err != nil {
+			return user{}, err
+		}
+		if !state {
+			return user{}, fmt.Errorf("signup token required but not accepted")
+		}
+	}
+
 	salt := strconv.Itoa(rand.New(rand.NewSource(time.Now().UnixNano())).Int())
 	hash := sha256.Sum256([]byte(password + salt))
 
 	id, err := dbUserRegister(ctf.Storage, username, string(hash[:]), salt)
+	if ctf.Configuration.RegistrationToken {
+		_ = dbDeleteSignupToken(ctf.Storage, token)
+	}
 	if err != nil {
 		return user{}, err
 	}
@@ -182,6 +195,10 @@ func (ctf *ctf) loggedIn(c *fiber.Ctx) bool {
 		return true
 	}
 	return false
+}
+
+func (ctf *ctf) addSignupToken(token string) error {
+	return dbInsertSignupToken(ctf.Storage, token)
 }
 
 func (ctf *ctf) solve(c *fiber.Ctx, flag string) (int, error) {

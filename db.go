@@ -43,6 +43,9 @@ func dbInitStorage(db *sql.DB) error {
 			hintid string NOT NULL,
 			points INTEGER NOT NULL,
 			unique (user, Challenge, hintid)
+		);
+		CREATE TABLE IF NOT EXISTS signuptokens (
+			token STRING NOT NULL PRIMARY KEY
 		);`
 	if _, err := db.Exec(initDB); err != nil {
 		return err
@@ -194,4 +197,37 @@ func dbHintGetCost(db *sql.DB, userID int, challengeID string) (int, error) {
 	default:
 		return 0, err
 	}
+}
+
+// SignUpToken
+
+func dbInsertSignupToken(db *sql.DB, token string) error {
+	_, err := db.Exec("INSERT INTO signuptokens VALUES(?);", token)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func dbHasSignupToken(db *sql.DB, token string) (bool, error) {
+	var scanToken string
+	row := db.QueryRow(`SELECT token FROM signuptokens WHERE token=$1;`, token)
+	err := row.Scan(&scanToken)
+	if err != nil {
+		return false, err
+	}
+	if scanToken != token {
+		return false, nil
+	}
+	return true, nil
+}
+
+func dbDeleteSignupToken(db *sql.DB, token string) error {
+	var scanToken string
+	row := db.QueryRow(`DELETE FROM signuptokens WHERE token=$1;`, token)
+	err := row.Scan(&scanToken)
+	if err != nil {
+		return err
+	}
+	return nil
 }

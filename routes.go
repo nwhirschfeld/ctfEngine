@@ -180,13 +180,14 @@ func rPostSignup(c *fiber.Ctx, ctf *ctf) error {
 		Username  string `form:"username"`
 		Password  string `form:"password"`
 		Password2 string `form:"password2"`
+		Token     string `form:"token"`
 	}{}
 
 	if err := c.BodyParser(&payload); err != nil {
 		return err
 	}
 
-	_, err := ctf.register(c, payload.Username, payload.Password, payload.Password2)
+	_, err := ctf.register(c, payload.Username, payload.Password, payload.Password2, payload.Token)
 	switch err {
 	case nil:
 		ctf.addToast(c, "Registration completed",
