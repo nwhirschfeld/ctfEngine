@@ -3,7 +3,7 @@ module ctfEngine
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.1
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gofiber/storage/sqlite3 v1.3.8
 	github.com/gofiber/template/html/v2 v2.1.1
 	github.com/google/uuid v1.6.0
