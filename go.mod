@@ -3,7 +3,7 @@ module ctfEngine
 go 1.21
 
 require (
-	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/gofiber/fiber/v2 v2.52.9
 	github.com/gofiber/storage/sqlite3 v1.3.8
 	github.com/gofiber/template/html/v2 v2.1.2
 	github.com/google/uuid v1.6.0
@@ -24,6 +24,6 @@ require (
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasthttp v1.56.0 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
-	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/sys v0.28.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
